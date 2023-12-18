@@ -38,20 +38,19 @@ def findLeastCoolingPath(grid, i, j, prevDirection, numSameDirection):
         newCooling = findLeastCoolingPath(grid, i-1, j, CardinalDirection.NORTH, numSameDirection+1 if prevDirection == CardinalDirection.NORTH else 1)
         minCooling = min(minCooling, newCooling)
     
-    # Go West
-    if (prevDirection == CardinalDirection.WEST and numSameDirection == 3) == False and j > 0:
-        newCooling = findLeastCoolingPath(grid, i, j-1, CardinalDirection.WEST, numSameDirection+1 if prevDirection == CardinalDirection.WEST else 1)
+    # Go East
+    if (prevDirection == CardinalDirection.EAST and numSameDirection == 3) == False and j < len(grid[0])-1:
+        newCooling = findLeastCoolingPath(grid, i, j+1, CardinalDirection.EAST, numSameDirection+1 if prevDirection == CardinalDirection.EAST else 1)
         minCooling = min(minCooling, newCooling)
     
     # Go South
     if (prevDirection == CardinalDirection.SOUTH and numSameDirection == 3) == False and i < len(grid)-1:
         newCooling = findLeastCoolingPath(grid, i+1, j, CardinalDirection.SOUTH, numSameDirection+1 if prevDirection == CardinalDirection.SOUTH else 1)
         minCooling = min(minCooling, newCooling)
-    
 
-    # Go East
-    if (prevDirection == CardinalDirection.EAST and numSameDirection == 3) == False and j < len(grid[0])-1:
-        newCooling = findLeastCoolingPath(grid, i, j+1, CardinalDirection.EAST, numSameDirection+1 if prevDirection == CardinalDirection.EAST else 1)
+    # Go West
+    if (prevDirection == CardinalDirection.WEST and numSameDirection == 3) == False and j > 0:
+        newCooling = findLeastCoolingPath(grid, i, j-1, CardinalDirection.WEST, numSameDirection+1 if prevDirection == CardinalDirection.WEST else 1)
         minCooling = min(minCooling, newCooling)
     
     grid[i][j].visited = False
@@ -59,8 +58,10 @@ def findLeastCoolingPath(grid, i, j, prevDirection, numSameDirection):
     # Line below just for printing out what minCooling value is attached to each row
     grid[i][j].minCooling = minCooling
 
+    # On the right track with this if statement I think
     if minCooling != float("inf"):
         memoTable[memKey] = minCooling + grid[i][j].coolingNumber
+
     return minCooling + grid[i][j].coolingNumber
 
 def part1():
